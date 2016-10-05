@@ -1,0 +1,42 @@
+section.articles {
+    background: white;
+    border-radius: 8px;
+    overflow-y: scroll;
+
+
+    > article {
+        margin: 1em;
+        > header {
+            text-align: center;
+            font-size: 1.6em;
+          >.date {
+            float: left;
+            font-size: 0.5em;
+          }
+          >button.edit {
+            float: right;
+            margin-right: 2em;
+            position: relative;
+            &.publishedfalse::before {
+               content: "Nowy";
+               font-style: italic;
+               display: inline-block;
+              position: absolute;
+              right: 120%;
+            }
+            &.publishedtrue::before {
+              content: "Opublikowany";
+              font-style: italic;
+              display: inline-block;
+              position: absolute;
+              right: 120%;
+            }
+          }
+        }
+        > footer {
+            margin-left: 2em;
+            font-size: 0.61em;
+        }
+
+    }
+}

@@ -1,0 +1,33 @@
+
+
+html, body {
+    padding: 0;
+    margin: 0;
+    font-size: 18px;
+    font-family: arial;
+}
+
+a {
+    text-decoration: none;
+    &::after {
+        content: " >>";
+        white-space: nowrap;
+    }
+
+    &:hover {
+        outline: 1px dashed gray;
+    }
+}
+
+button {
+  border-radius: 12px;
+  box-shadow: 2px 2px 6px 6px darkgreen;
+  border: none;
+  padding: 0.5em;
+  margin: 0.5em;
+}
+
+
+input {
+  font: inherit;
+}

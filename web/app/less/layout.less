@@ -1,0 +1,167 @@
+@import "lib.less";
+
+@main-padding: 2em;
+@top-padding: 5em;
+@abstand: 0.7em;
+
+@logo-start: 30%;
+
+@panel-width: 20%;
+@panel-space: 2.4%;
+
+html, body, #react {
+  .full-width();
+}
+
+.top-panel() {
+  top: @abstand;
+  height: @top-padding;
+
+}
+
+.bottom-panel() {
+  bottom: @abstand;
+  height: @top-padding;
+  min-width: 300px;
+}
+
+#react > .main {
+  .full-width();
+  position: relative;
+
+  > section {
+    position: absolute;
+    box-shadow: 2px 2px 8px 8px rgba(76, 35, 35, 0.47);
+    border-radius: 12px;
+    &.login {
+      left: @panel-space + @panel-width*2;
+      right: @panel-space + @panel-width*2;
+      .bottom-panel();
+      min-width: 100px;
+      background-color: appworkspace;
+      > button {
+        width: 100%;
+        height: 100%;
+      }
+    }
+
+    &.images {
+      display: none;
+    }
+    &.new {
+      overflow: hidden;
+    }
+    &.about, &.contact {
+      > nav {
+        text-align: center;
+        > a {
+          position: relative;
+          top: 2em;
+        }
+      }
+
+      > article {
+        display: none;
+
+        &:target {
+          display: block;
+          overflow: auto;
+          position: fixed;
+          left: @main-padding;
+          right: @main-padding;
+          top: @top-padding+2em;
+          bottom: @top-padding+2em;
+          z-index: 2;
+          background: #6cffc2;
+          padding: 1em;
+          > header {
+            text-align: center;
+            font-size: 1.61em;
+            > .date {
+              float: left;
+              font-size: 0.5em;
+            }
+          }
+          > footer {
+            margin-left: 2em;
+            font-size: 1.61em;
+            border-top: 1px dashed gray;
+          }
+        }
+      }
+    }
+
+    &.articles {
+      > article {
+        display: block;
+        z-index: 1;
+        &:target {
+          position: static;
+        }
+
+      }
+
+      left: @main-padding;
+      right: @main-padding;
+      top: @top-padding+2em;
+      bottom: @top-padding+2em;
+    }
+
+    &.logo {
+      left: @panel-space*2 + @panel-width;
+      right: @panel-space;
+      .top-panel();
+      box-shadow: none;
+    }
+
+    &.new {
+      left: @panel-space;
+      width: @panel-width;
+      .top-panel();
+      background-color: azure;
+      // min-width: 300px;
+      > ul {
+        padding: 0px;
+        margin: 0.5em 1em;
+        li > a {
+          max-width: 100%;
+          display: inline-block;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          overflow: hidden;
+          vertical-align: middle;
+        }
+      }
+    }
+    &.images {
+      right: @panel-space;
+      width: @panel-width;
+      .top-panel();
+    }
+    &.contact {
+      left: @panel-space;
+      width: @panel-width;
+      .bottom-panel();
+      background-color: appworkspace;
+    }
+
+    &.about {
+      right: @panel-space;
+      width: @panel-width;
+      .bottom-panel();
+      background-color: bisque;
+    }
+  }
+}
+
+@media screen and (max-width: 600px) {
+  #react > .main > section {
+    display: none;
+    &.articles {
+      left: 0px;
+      top: 0px;
+      .full-width();
+      display: block;
+    }
+  }
+}
