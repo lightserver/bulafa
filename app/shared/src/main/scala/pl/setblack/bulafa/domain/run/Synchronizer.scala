@@ -1,5 +1,7 @@
 package pl.setblack.bulafa.domain.run
 
+import pl.setblack.bulafa.domain.run.state.Synchronizer
+
 
 object Synchronizer {
 
@@ -11,9 +13,7 @@ object Synchronizer {
 
   }
 
-  case class CreatedArticles(paths: Seq[Seq[String]]) {
-    def this () = this( Seq())
-  }
+  case class NewArticlesState(synchronizer: Synchronizer, paths: Seq[Seq[String]])
 
 }
 
