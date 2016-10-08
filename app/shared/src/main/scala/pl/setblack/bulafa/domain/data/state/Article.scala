@@ -1,7 +1,5 @@
 package pl.setblack.bulafa.domain.data.state
 
-
-
 /**
   * Article has PATH and some Content
   *

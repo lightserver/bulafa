@@ -1,4 +1,4 @@
-package pl.setblack.movedev.show
+package pl.setblack.bulafa.jvm
 
 object Testing {
   implicit class TestDescription(value: String) {

@@ -1,4 +1,4 @@
-package pl.setblack.movedev.show.ui
+package pl.setblack.bulafa.jvm.ui
 
 import japgolly.scalajs.react.BackendScope
 import japgolly.scalajs.react.vdom.prefix_<^._
