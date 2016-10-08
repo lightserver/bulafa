@@ -7,15 +7,10 @@ import java.util.UUID
 import pl.setblack.bulafa.domain.run.state.PresentationRun
 import pl.setblack.lsa.events._
 
-
-
 object PresentationRunDomain {
   sealed  trait PresentationRunEvent
 
   case class NextStep(currentPage :Int, currentStep : Int) extends PresentationRunEvent
-
-
-
 
   implicit object PresentationRunEventConverter  extends EventConverter[PresentationRunEvent]{
      import upickle.default._
@@ -25,7 +20,7 @@ object PresentationRunDomain {
   }
 
   class PresentationRunDomain(val presentationId : UUID)
-    extends Domain[PresentationRun, PresentationRunEvent]( new PresentationRun(), Seq("presentation", presentationId.toString)) {
+    extends Domain[PresentationRun, PresentationRunEvent]( new PresentationRun()) {
     override protected def processDomain(state: PresentationRun, event: PresentationRunEvent, eventContext: EventContext): Response = {
 
       DefaultResponse

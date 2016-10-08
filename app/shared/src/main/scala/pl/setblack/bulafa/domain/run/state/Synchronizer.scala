@@ -1,12 +1,14 @@
 package pl.setblack.bulafa.domain.run.state
 
 import pl.setblack.bulafa.domain.data.ArticleDomain.ArticleDomainRef
-import pl.setblack.bulafa.domain.run.Synchronizer.NewArticlesState
+import pl.setblack.bulafa.domain.run.InSynchronizer.NewArticlesState
 
 case class Synchronizer(knownArticles: Map[Seq[String], ArticleDomainRef]) {
 
   type SeqOfPaths = Seq[Seq[String]]
   type ArticleFactory = (Seq[String]) => ArticleDomainRef
+
+
 
   def this(rootArticle: ArticleDomainRef) = this(Map(Seq[String]() -> rootArticle))
 

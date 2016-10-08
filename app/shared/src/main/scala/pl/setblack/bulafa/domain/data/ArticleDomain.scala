@@ -7,7 +7,6 @@ import pl.setblack.bulafa.domain.data.state.Article
 import pl.setblack.lsa.events._
 
 
-
 object ArticleDomain {
 
   sealed trait ArticleEvent
@@ -29,7 +28,7 @@ object ArticleDomain {
 
 
   class ArticleDomain(articlePath : Seq[String])
-    extends Domain[Article, ArticleEvent](new Article(articlePath), Seq("articles") ++ articlePath ) {
+    extends Domain[Article, ArticleEvent](new Article(articlePath)) {
 
 
     override protected def processDomain(state: Article, event: ArticleEvent, eventContext: EventContext): Response = {

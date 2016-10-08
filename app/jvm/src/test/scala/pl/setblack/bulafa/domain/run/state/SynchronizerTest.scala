@@ -2,7 +2,7 @@ package pl.setblack.bulafa.domain.run.state
 
 import org.scalatest.{FunSpec, Matchers}
 import pl.setblack.bulafa.domain.data.ArticleDomain._
-import pl.setblack.bulafa.domain.run.Synchronizer.NewArticlesState
+import pl.setblack.bulafa.domain.run.InSynchronizer.NewArticlesState
 import pl.setblack.lsa.concurrency.BadActorRef
 import pl.setblack.lsa.events.impl.NodeEvent
 
@@ -37,7 +37,8 @@ class SynchronizerTest extends FunSpec with Matchers {
 
     it("should return only one articles for second level entry") {
       val newSynch =  synchron.putMissingArticlesInHierarchy(Seq("firstLevel", "secondLevel1"), creator).synchronizer
-      newSynch.putMissingArticlesInHierarchy(Seq("firstLevel", "secondLevel2"), creator).paths should be (Seq(Seq("firstLevel", "secondLevel2")))
+      ( newSynch.putMissingArticlesInHierarchy(Seq("firstLevel", "secondLevel2"), creator).paths
+        should be (Seq(Seq("firstLevel", "secondLevel2"))))
     }
 
 
