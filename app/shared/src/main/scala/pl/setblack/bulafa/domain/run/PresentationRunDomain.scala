@@ -21,9 +21,12 @@ object PresentationRunDomain {
 
   class PresentationRunDomain(val presentationId : UUID)
     extends Domain[PresentationRun, PresentationRunEvent]( new PresentationRun()) {
-    override protected def processDomain(state: PresentationRun, event: PresentationRunEvent, eventContext: EventContext): Response = {
+    override protected def processDomain(
+                                          state: PresentationRun,
+                                          event: PresentationRunEvent,
+                                          eventContext: EventContext): Response[PresentationRun] = {
 
-      DefaultResponse
+      new DefaultResponse
     }
   }
 

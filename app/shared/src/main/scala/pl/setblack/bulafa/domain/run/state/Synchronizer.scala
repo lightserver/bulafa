@@ -1,14 +1,12 @@
 package pl.setblack.bulafa.domain.run.state
 
-import pl.setblack.bulafa.domain.data.ArticleDomain.ArticleDomainRef
+import pl.setblack.bulafa.domain.data.InArticle.ArticleDomainRef
 import pl.setblack.bulafa.domain.run.InSynchronizer.NewArticlesState
 
 case class Synchronizer(knownArticles: Map[Seq[String], ArticleDomainRef]) {
 
   type SeqOfPaths = Seq[Seq[String]]
-  type ArticleFactory = (Seq[String]) => ArticleDomainRef
-
-
+  type ArticleFactory = (Seq[String]) => Option[ArticleDomainRef]
 
   def this(rootArticle: ArticleDomainRef) = this(Map(Seq[String]() -> rootArticle))
 
@@ -20,7 +18,7 @@ case class Synchronizer(knownArticles: Map[Seq[String], ArticleDomainRef]) {
 
 
  private def putArticle( path: Seq[String], articleCreator : ArticleFactory) : Synchronizer = {
-   copy(knownArticles +  (path -> articleCreator(path) ))
+   articleCreator(path).map( artRef => copy(knownArticles +  (path -> artRef))).getOrElse(this)
  }
 
   private def internalSelectArticlesToCreate( path: Seq[String] , articleFactory: ArticleFactory) : (Synchronizer, SeqOfPaths) = {

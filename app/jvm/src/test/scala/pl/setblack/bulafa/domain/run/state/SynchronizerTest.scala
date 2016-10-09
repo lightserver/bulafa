@@ -1,7 +1,7 @@
 package pl.setblack.bulafa.domain.run.state
 
 import org.scalatest.{FunSpec, Matchers}
-import pl.setblack.bulafa.domain.data.ArticleDomain._
+import pl.setblack.bulafa.domain.data.InArticle._
 import pl.setblack.bulafa.domain.run.InSynchronizer.NewArticlesState
 import pl.setblack.lsa.concurrency.BadActorRef
 import pl.setblack.lsa.events.impl.NodeEvent
@@ -14,7 +14,7 @@ class SynchronizerTest extends FunSpec with Matchers {
 
   describe("synchronizer") {
     val synchron = new Synchronizer(rootArticleRef)
-    val creator = (x: Seq[String]) => new ArticleDomainRef(x, fakeNodeRef)
+    val creator = (x: Seq[String]) => Some(new ArticleDomainRef(x, fakeNodeRef))
 
     it("should return no new articles root article") {
       synchron.putMissingArticlesInHierarchy(Seq(), creator).paths should be(empty)
