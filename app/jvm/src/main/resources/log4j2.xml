@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="DEBUG">
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+        </Console>
+        <File name="PROCESSED_FILES_IN_SYNCHRONIZER" fileName="logs/synchronizer.log">
+            <PatternLayout>
+                <Pattern>%m%n</Pattern>
+            </PatternLayout>
+        </File>
+        <File name="PROCESSED_FILES_IN_WATCHER" fileName="logs/watcher.log">
+            <PatternLayout>
+                <Pattern>%m%n</Pattern>
+            </PatternLayout>
+        </File>
+        <File name="PROCESSED_MSG_IN_NODE" fileName="logs/node.log">
+            <PatternLayout>
+                <Pattern>%m%n</Pattern>
+            </PatternLayout>
+        </File>
+        <File name="PROCESSED_MSG_IN_DOMAIN" fileName="logs/domain.log">
+            <PatternLayout>
+                <Pattern>%m%n</Pattern>
+            </PatternLayout>
+        </File>
+    </Appenders>
+
+    <Loggers>
+        <Logger name="SYNCHRO" level="debug" additivity="false">
+            <AppenderRef ref="PROCESSED_FILES_IN_SYNCHRONIZER"/>
+
+        </Logger>
+        <Logger name="NODE" level="debug" additivity="false">
+            <AppenderRef ref="PROCESSED_MSG_IN_NODE"/>
+
+        </Logger>
+        <Logger name="DOMAIN" level="debug" additivity="false">
+            <AppenderRef ref="PROCESSED_MSG_IN_DOMAIN"/>
+
+        </Logger>
+        <Logger name="WATCHER" level="debug" additivity="false">
+            <AppenderRef ref="PROCESSED_FILES_IN_WATCHER"/>
+
+        </Logger>
+        <Root level="trace">
+            <AppenderRef ref="Console"/>
+
+        </Root>
+    </Loggers>
+</Configuration>

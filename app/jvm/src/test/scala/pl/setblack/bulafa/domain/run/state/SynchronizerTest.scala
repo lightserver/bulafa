@@ -35,13 +35,17 @@ class SynchronizerTest extends FunSpec with Matchers {
         should be( Seq(Seq("firstLevel"), Seq("firstLevel", "secondLevel"))) )
     }
 
+    it("should have two new articles for first and second level entry") {
+       val newState = synchron.putMissingArticlesInHierarchy(Seq("firstLevel", "secondLevel"), creator).synchronizer
+      ( newState.knownArticles.keys
+        should contain( Seq("firstLevel", "secondLevel")))
+    }
+
     it("should return only one articles for second level entry") {
       val newSynch =  synchron.putMissingArticlesInHierarchy(Seq("firstLevel", "secondLevel1"), creator).synchronizer
       ( newSynch.putMissingArticlesInHierarchy(Seq("firstLevel", "secondLevel2"), creator).paths
         should be (Seq(Seq("firstLevel", "secondLevel2"))))
     }
-
-
 
   }
 }

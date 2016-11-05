@@ -57,6 +57,10 @@ val app = crossProject.settings(
     "com.typesafe.akka" %% "akka-actor" % "2.4.1",
     "com.typesafe.akka" %% "akka-remote" % "2.4.1",
     "org.scalaz" %% "scalaz-core" % "7.1.2",
+    "biz.enef" %% "slogging-slf4j" % "0.4.0",
+   "org.apache.logging.log4j" % "log4j-slf4j-impl" % "2.7",
+    "org.apache.logging.log4j" % "log4j-api" % "2.7",
+    "org.apache.logging.log4j" % "log4j-core" % "2.7",
     "com.typesafe.akka" %% "akka-http-experimental" % "2.0.1",
     "com.github.pathikrit" %% "better-files-akka" % "2.16.0",
     "org.scalatest" %% "scalatest" % "3.0.0" % "test"

@@ -32,6 +32,7 @@ case class Synchronizer(knownArticles: Map[Seq[String], ArticleDomainRef]) {
     result
   }
 
+  def dump  = this.knownArticles
 
 }
 

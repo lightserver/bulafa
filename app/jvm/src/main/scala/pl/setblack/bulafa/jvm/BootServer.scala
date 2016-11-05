@@ -13,15 +13,19 @@ import pl.setblack.bulafa.jvm.watcher.Watcher
 import pl.setblack.log.LogConfig
 import pl.setblack.lsa.events.DomainRef
 import pl.setblack.lsa.server.JVMNexus
+import slogging.{LazyLogging, LogLevel, LoggerConfig, SLF4JLoggerFactory}
 
 
-object BootServer {
+object BootServer extends LazyLogging {
   def main(s: Array[String]): Unit = {
 
     implicit val system = ActorSystem()
     implicit val materializer = ActorMaterializer()
 
-    LogConfig.initConfig()
+    LoggerConfig.factory = SLF4JLoggerFactory()
+    LoggerConfig.level = LogLevel.DEBUG
+
+
 
     val server = new JVMNexus()
     val node = server.start(system, materializer)
@@ -35,7 +39,7 @@ object BootServer {
     synchronizerRef.restoreDomain()
 
 
-    val watcher = new Watcher("/home/jarek/tmp")
+    val watcher = new Watcher("/home/jarek/dev/presentations/bulafa")
     node.registerDomainListener(watcher, synchronizerRef)
 
     watcher.start(synchronizerRef)
