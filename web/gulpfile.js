@@ -1,6 +1,6 @@
 'use strict';
 
-var appName = 'bulafa';
+var appName = 'app';
 
 var gulp = require('gulp');
 var plugins = require('gulp-load-plugins')();
@@ -129,14 +129,14 @@ gulp.task('scripts', function() {
 
 gulp.task('scalajs', function() {
   var dest = path.join(targetDir, 'scjs');
-  return gulp.src(['../app/js/target/scala-2.11/*.js','../app/js/target/scala-2.11/*.js.map'])
+  return gulp.src(['../app/js/target/scala-2.12/*.js','../app/js/target/scala-2.11/*.js.map'])
     .pipe( gulp.dest(dest));
 
 });
 
 gulp.task('resources', function() {
     var dest = path.join(targetDir, 'resources');
-    return gulp.src(['../app/js/target/scala-2.11/classes/**/*.json'])
+    return gulp.src(['../app/js/target/scala-2.12/classes/**/*.json'])
         .pipe( gulp.dest(dest));
 
 });
@@ -276,8 +276,8 @@ gulp.task('watchers', function() {
   gulp.watch('./vendor.json', ['vendor']);
   gulp.watch('app/templates/**/*.html', ['index']);
   gulp.watch('app/index.html', ['index']);
-  gulp.watch('../app/js/target/scala-2.11/*.js', ['scalajs']);
-   gulp.watch('../app/js/target/scala-2.11/classes/**/*.json', ['resources']);
+  gulp.watch('../app/js/target/scala-2.12/*.js', ['scalajs']);
+   gulp.watch('../app/js/target/scala-2.12/classes/**/*.json', ['resources']);
   gulp.watch(targetDir + '/**')
     .on('change', plugins.livereload.changed)
     .on('error', errorHandler);
