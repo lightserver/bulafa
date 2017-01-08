@@ -15,6 +15,7 @@ var streamqueue = require('streamqueue');
 var runSequence = require('run-sequence');
 var merge = require('merge-stream');
 var ripple = require('ripple-emulator');
+var rewrite = require('express-urlrewrite');
 var proxyMiddleware = require('http-proxy-middleware');
 var less = require('gulp-less');
 var sourcemaps = require('gulp-sourcemaps');
@@ -61,9 +62,7 @@ var options = {
   target: 'http://localhost:8080', // target host
   changeOrigin: true,               // needed for virtual hosted sites
   ws: true,                         // proxy websockets
-  pathRewrite: {
-    '^/old/api' : '/new/api'      // rewrite paths
-  },
+
   proxyTable: {
     // when request.headers.host == 'dev.localhost:3000',
     // override target 'http://www.example.org' to 'http://localhost:8000'
@@ -240,7 +239,10 @@ gulp.task('index', [ 'scripts'], function() {
 gulp.task('serve', function() {
   express()
     .use(!build ? connectLr() : function(){})
+      .use(rewrite(/^\/vidi\/.*\.html$/, '/index.html'))
+      .use(rewrite(/^\/vidi\/(.*)$/, '/$1'))
     .use(proxy)
+
     .use(express.static(targetDir))
     .listen(port);
   open('http://localhost:' + port + '/');

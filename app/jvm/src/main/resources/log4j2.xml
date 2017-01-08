@@ -9,6 +9,11 @@
                 <Pattern>%m%n</Pattern>
             </PatternLayout>
         </File>
+        <File name="PROCESSED_ARTICLES" fileName="logs/articles.log">
+            <PatternLayout>
+                <Pattern>%m%n</Pattern>
+            </PatternLayout>
+        </File>
         <File name="PROCESSED_FILES_IN_WATCHER" fileName="logs/watcher.log">
             <PatternLayout>
                 <Pattern>%m%n</Pattern>
@@ -29,6 +34,10 @@
     <Loggers>
         <Logger name="SYNCHRO" level="debug" additivity="false">
             <AppenderRef ref="PROCESSED_FILES_IN_SYNCHRONIZER"/>
+
+        </Logger>
+        <Logger name="ARTICLES" level="debug" additivity="false">
+            <AppenderRef ref="PROCESSED_ARTICLES"/>
 
         </Logger>
         <Logger name="NODE" level="debug" additivity="false">

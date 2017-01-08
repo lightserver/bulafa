@@ -1,18 +1,21 @@
 package pl.setblack.bulafa.jvm
 
+import java.util.UUID
+
 import japgolly.scalajs.react.{ReactComponentB, ReactDOM}
-import org.scalajs.dom._
 import pl.setblack.bulafa.domain.run.state.PresentationRun
 import pl.setblack.bulafa.jvm.ui.Backends
+import pl.setblack.log.LogConfig
 import pl.setblack.lsa.browser.JSNexus
-import pl.setblack.lsa.events.Node
+import pl.setblack.lsa.events.{Node, NodeRef}
 import pl.setblack.lsa.resources.{JSResources, UniResource}
 import pl.setblack.lsa.security.SignedCertificate
-import pl.setblack.log.LogConfig
 import upickle.default._
 
 import scala.scalajs.js
 import scala.util.Try
+import org.scalajs.dom
+import pl.setblack.bulafa.domain.run.PresentationRunDomain.PresentationRunDomain
 
 object Init extends js.JSApp {
   def main(): Unit = {
@@ -26,8 +29,18 @@ object Init extends js.JSApp {
         println(s"mam ${res.get.asString}")
         val rootCertificate = read[SignedCertificate](res.get.asString)
         val jsbeeing = new JSNexus()
-        val node: Node = jsbeeing.start()
-       // node.registerDomain(FitbitDomainConfig.path, new FitbitDomain())
+        val node: NodeRef = jsbeeing.start()
+
+        val url = dom.window.location.href
+
+        println(s"you are in ${url}")
+        val presentation  = url.replaceFirst(".*/vidi/(.*)\\.html", "$1")
+        println(s"presentation ${presentation}")
+        val uuid = UUID.randomUUID();
+        node.registerDomain(Seq("presentation", uuid.toString), new PresentationRunDomain(uuid))
+
+
+
         initReactComponents
 
       }

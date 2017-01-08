@@ -16,7 +16,11 @@ trait FileProcessor {
 
 class HTMLFileProcessor extends FileProcessor {
 
-  override def accepts(subpath: Seq[String], file: File): Boolean = file.extension == Some(".html")
+  val validExtensions:Set[String] = Set(".html", ".json")
+
+  override def accepts(subpath: Seq[String], file: File): Boolean = {
+    validExtensions.contains(file.extension.getOrElse(""))
+  }
 
   override def process(subpath: Seq[String], file: File): Seq[SynchronizerEvent] = {
     val fileContent = file.contentAsString

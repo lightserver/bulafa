@@ -4,6 +4,7 @@
   "author": "Jarek ratajski <jratajski@gmail.com>",
   "description": "",
   "dependencies": {
+    "express-urlrewrite": "^1.2.0",
     "gulp-less": "^3.0.3",
     "gulp-sourcemaps": "^1.6.0"
   },

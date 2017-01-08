@@ -4,6 +4,7 @@ import java.util.UUID
 
 import pl.setblack.bulafa.domain.data.state.{Article, ArticleContent}
 import pl.setblack.lsa.events._
+import slogging.{LazyLogging, LoggerFactory}
 
 
 object InArticle {
@@ -30,15 +31,31 @@ object InArticle {
   }
 
 
-  class ArticleDomain(articlePath: Seq[String], content :ArticleContent)
-    extends Domain[Article, ArticleEvent](new Article(articlePath, Seq(content))) {
+  class ArticleDomain(articlePath: Seq[String])
+    extends Domain[Article, ArticleEvent](new Article(articlePath, Seq()))
+    with LazyLogging {
+
+    val articlesLogger = LoggerFactory.getLogger("ARTICLES")
+
 
 
     override protected def processDomain(state: Article, event: ArticleEvent, eventContext: EventContext): Response[Article] = {
 
-      new DefaultResponse
+      event match {
+        case Create(content,uuid) => new DefaultResponse[Article](Some(create(state, content, uuid)))
+        case _ => new DefaultResponse
+      }
+
+    }
+
+
+
+    private def create(state: Article, content: String, uuid: UUID) : Article = {
+      articlesLogger.debug(articlePath.mkString(","))
+      state.copy( currentVersions =  Seq( ArticleContent(content, uuid)))
     }
   }
+
 
 
 }

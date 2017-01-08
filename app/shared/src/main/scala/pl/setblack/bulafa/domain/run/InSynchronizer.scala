@@ -3,7 +3,7 @@ package pl.setblack.bulafa.domain.run
 import java.util.UUID
 
 import pl.setblack.bulafa.domain.data.InArticle
-import pl.setblack.bulafa.domain.data.InArticle.{ArticleDomain, ArticleDomainRef}
+import pl.setblack.bulafa.domain.data.InArticle.{ArticleDomain, ArticleDomainRef, Create}
 import pl.setblack.bulafa.domain.data.state.ArticleContent
 import pl.setblack.bulafa.domain.run.state.Synchronizer
 import pl.setblack.lsa.events._
@@ -16,6 +16,8 @@ object InSynchronizer {
   case class FileWithContent(txt: String, path: Seq[String], uuid  : UUID) extends SynchronizerEvent
 
   case class Directory(path : Seq[String], uuid: UUID) extends SynchronizerEvent
+
+
 
   case object  Dump extends SynchronizerEvent
 
@@ -47,6 +49,7 @@ object InSynchronizer {
 
     private def addArticle(state: Synchronizer, create: FileWithContent, eventContext: EventContext): Response[Synchronizer] = {
       syncLogger.debug(create.path.mkString(","))
+
       addDomain(state, create.path, Some(create.txt), create.uuid, eventContext)
     }
 
@@ -57,7 +60,11 @@ object InSynchronizer {
 
     private def addDomain(state  :Synchronizer, path : Seq[String], txt  : Option[String], uuid  : UUID, ctx :  EventContext):Response[Synchronizer] = {
       val content = new ArticleContent(txt.getOrElse(""), uuid)
-      val factory = (path: Seq[String]) => ctx.createDomain(InArticle.toArticlePath(path), new ArticleDomain(path, content))
+      val factory = (path: Seq[String]) => {
+        val ref = ctx.createDomain(InArticle.toArticlePath(path), new ArticleDomain(path))
+        ref.foreach( _.send(Create(content.text,uuid)))
+        ref
+      }
       val newState = state.putMissingArticlesInHierarchy(path, factory)
       if (newState.synchronizer.knownArticles.size < lastSize) {
         println("niezla kutwa")

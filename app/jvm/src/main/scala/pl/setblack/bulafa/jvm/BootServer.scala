@@ -31,16 +31,15 @@ object BootServer extends LazyLogging {
     val node = server.start(system, materializer)
 
     val rootArticlePath = Seq( "root");
-    val rootArticleContent =new ArticleContent("", UUID.randomUUID())
     val rootArticle:DomainRef[ArticleEvent] = node.registerDomain(InArticle.toArticlePath(rootArticlePath),
-      new ArticleDomain(rootArticlePath, rootArticleContent))
+      new ArticleDomain(rootArticlePath))
 
     val synchronizerRef = node.registerDomain(Seq("synchronizer"), new SynchronizerDomain(rootArticle))
     synchronizerRef.restoreDomain()
 
 
     val watcher = new Watcher("/home/jarek/dev/presentations/bulafa")
-    node.registerDomainListener(watcher, synchronizerRef)
+    node.registerDomainListener(synchronizerRef.path, watcher)
 
     watcher.start(synchronizerRef)
   }
