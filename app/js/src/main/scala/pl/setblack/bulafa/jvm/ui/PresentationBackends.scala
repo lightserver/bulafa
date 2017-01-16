@@ -6,7 +6,8 @@ import pl.setblack.bulafa.domain.run.state.PresentationRun
 
 object Backends {
 
-  class Backend($: BackendScope[Unit, PresentationRun]) {
+  class Backend($: BackendScope[Unit, PresentationRun])
+  extends DomainListener{
 
   }
 

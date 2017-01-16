@@ -128,7 +128,7 @@ gulp.task('scripts', function() {
 
 gulp.task('scalajs', function() {
   var dest = path.join(targetDir, 'scjs');
-  return gulp.src(['../app/js/target/scala-2.12/*.js','../app/js/target/scala-2.11/*.js.map'])
+  return gulp.src(['../app/js/target/scala-2.12/*.js','../app/js/target/scala-2.12/*.js.map'])
     .pipe( gulp.dest(dest));
 
 });
@@ -226,6 +226,7 @@ gulp.task('index', [ 'scripts'], function() {
     .pipe(_inject(gulp.src([fullJS ? 'scjs/'+appName+'-jsdeps.min.js' :
       'scjs/'+appName+'-jsdeps.js' , fullJS ? 'scjs/'+appName+'-opt.js'
       : 'scjs/'+appName+'-fastopt.js','scjs/'+appName+'-launcher.js'], { cwd: targetDir }), 'scalajs'))
+
     .pipe(plugins.if(build,
       _inject(gulp.src('scripts/app*.js', { cwd: targetDir }), 'app'),
       _inject(_getAllScriptSources(), 'app')
